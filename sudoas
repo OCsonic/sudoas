@@ -1,0 +1,23 @@
+#!/bin/bash
+PRIVESC="/usr/bin/doas"
+case $1 in
+	-h|--help)
+		echo "Syntax : sudoas <command> | sudoas -h/--help | sudoas -e/--edit <file>"
+	;;
+	"")
+		echo No option specified! Try sudoas -h for help.
+	;;
+	-e|--edit)
+		case $2 in
+        		"")
+	        		echo No file specified! Try sudoas -h for help.
+	        	;;
+			*)
+				$PRIVESC $EDITOR "$2"
+			;;
+		esac
+	;;
+	*)
+		$PRIVESC $*
+	;;
+esac
